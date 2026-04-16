@@ -84,6 +84,7 @@ Rails.application.configure do
   config.hosts << "app.clawdeck.io"
   config.hosts << ".clawdeck.io"  # Allow all subdomains
   
-  # Skip DNS rebinding protection for the default health check endpoint.
-  config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+  # Skip DNS rebinding protection entirely in Docker to allow access via local IPs or custom domains
+  config.hosts.clear
+  config.host_authorization = { exclude: ->(request) { true } }
 end
