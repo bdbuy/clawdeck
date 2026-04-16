@@ -23,7 +23,7 @@
     </div>
   <% end %>
 
-  <%= form_with model: @user, url: registration_path, class: "space-y-2 font-normal mb-6", html: { autocomplete: "off" } do |form| %>
+  <%= form_with model: @user, url: registration_path, class: "space-y-2 font-normal mb-6", data: { turbo: false }, html: { autocomplete: "off" } do |form| %>
     <% if @user.errors.any? %>
       <div class="mb-4 p-3 bg-status-error/20 text-status-error text-xs rounded-md">
         <ul class="list-disc list-inside">
