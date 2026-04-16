@@ -1,4 +1,8 @@
 class ApplicationController < ActionController::Base
+  # Disable CSRF strict origin check for local HTTP deployments
+  protect_from_forgery with: :exception
+  self.forgery_protection_origin_check = false
+
   include Authentication
   before_action :set_locale
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
