@@ -1,15 +1,15 @@
-<% content_for :title, "Settings" %>
-<% content_for :breadcrumb_standalone, "Settings" %>
+<% content_for :title, t("settings.title") %>
+<% content_for :breadcrumb_standalone, t("settings.title") %>
 
 <div class="space-y-6 mt-12">
   <!-- Section 1: Profile -->
   <div class="bg-bg-surface border border-border rounded-lg p-5 space-y-4">
-    <h3 class="text-xs font-medium text-content-muted uppercase tracking-wider font-display">Profile</h3>
+    <h3 class="text-xs font-medium text-content-muted uppercase tracking-wider font-display"><%= t("settings.profile.section_title") %></h3>
 
     <%= form_with(model: @user, url: settings_path, method: :patch, class: "space-y-4") do |form| %>
       <!-- Avatar -->
       <div>
-        <label class="block text-xs font-medium text-content-secondary mb-2">Avatar</label>
+        <label class="block text-xs font-medium text-content-secondary mb-2"><%= t("settings.profile.avatar") %></label>
         <div class="flex items-center gap-4">
           <% if @user.has_avatar? %>
             <%= image_tag @user.avatar_source, class: "w-14 h-14 object-cover rounded-full" %>
@@ -22,21 +22,21 @@
           <% end %>
           <div class="flex-1">
             <%= form.file_field :avatar, accept: "image/jpeg,image/jpg,image/png,image/webp", class: "block w-full text-xs text-content-secondary file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-medium file:bg-bg-elevated file:text-content-secondary hover:file:bg-bg-hover file:cursor-pointer file:transition-colors" %>
-            <p class="text-xs text-content-muted mt-1">Max 512KB, 256x256px. JPEG, PNG, or WebP.</p>
+            <p class="text-xs text-content-muted mt-1"><%= t("settings.profile.avatar_hint") %></p>
           </div>
         </div>
         <% if @user.avatar.attached? || @user.avatar_url.present? %>
           <div class="mt-3">
             <label class="flex items-center text-xs text-content-secondary cursor-pointer">
               <%= form.check_box :remove_avatar, class: "mr-2 rounded border-border bg-bg-elevated text-accent focus:ring-accent focus:ring-offset-bg-surface" %>
-              Remove avatar
+              <%= t("settings.profile.remove_avatar") %>
             </label>
           </div>
         <% end %>
         <% if @user.errors[:avatar].any? %>
           <div class="mt-2">
             <% @user.errors[:avatar].each do |error| %>
-              <p class="text-status-error text-xs">Avatar <%= error %></p>
+              <p class="text-status-error text-xs"><%= t("settings.profile.avatar") %> <%= error %></p>
             <% end %>
           </div>
         <% end %>
@@ -44,20 +44,30 @@
 
       <!-- Email -->
       <div class="pt-4 border-t border-border">
-        <label class="block text-xs font-medium text-content-secondary mb-1.5">Email Address</label>
+        <label class="block text-xs font-medium text-content-secondary mb-1.5"><%= t("settings.profile.email") %></label>
         <%= form.email_field :email_address, placeholder: "your@email.com", class: "block w-full bg-bg-elevated border-0 rounded-md px-3 py-2 text-sm text-content placeholder:text-content-muted focus:ring-1 focus:ring-accent focus:outline-none" %>
         <% if @user.errors[:email_address].any? %>
           <div class="mt-1">
             <% @user.errors[:email_address].each do |error| %>
-              <p class="text-status-error text-xs">Email <%= error %></p>
+              <p class="text-status-error text-xs"><%= t("settings.profile.email") %> <%= error %></p>
             <% end %>
           </div>
         <% end %>
       </div>
 
       <div class="pt-2">
-        <%= form.submit "Save profile", class: "cursor-pointer px-4 py-2 bg-accent text-content hover:bg-accent-hover text-xs font-semibold rounded-md transition-colors duration-200" %>
+        <%= form.submit t("settings.profile.save_profile"), class: "cursor-pointer px-4 py-2 bg-accent text-content hover:bg-accent-hover text-xs font-semibold rounded-md transition-colors duration-200" %>
       </div>
+    <% end %>
+  </div>
+
+  <div class="bg-bg-surface border border-border rounded-lg p-5 space-y-4">
+    <h3 class="text-xs font-medium text-content-muted uppercase tracking-wider font-display"><%= t("common.language") %></h3>
+    <%= form_with url: locale_path, method: :patch do %>
+      <%= select_tag :locale,
+          options_for_select([[t("common.chinese"), "zh-CN"], [t("common.english"), "en"]], I18n.locale.to_s),
+          onchange: "this.form.submit()",
+          class: "block w-full bg-bg-elevated border-0 rounded-md px-3 py-2 text-sm text-content focus:ring-1 focus:ring-accent focus:outline-none" %>
     <% end %>
   </div>
 
@@ -65,98 +75,107 @@
   <div class="bg-bg-surface border border-border rounded-lg p-5 space-y-4">
     <div class="flex items-center gap-2">
       <span class="text-lg">🦞</span>
-      <h3 class="text-sm font-semibold text-content font-display">OpenClaw Integration</h3>
+      <h3 class="text-sm font-semibold text-content font-display"><%= t("settings.agent.title") %></h3>
     </div>
 
     <p class="text-xs text-content-secondary">
-      Connect your OpenClaw agent to ClawDeck. Copy the prompt below and add it to your agent's configuration.
+      <%= t("settings.agent.description") %>
     </p>
 
     <% api_url = "#{request.base_url}/api/v1" %>
     <% api_token = @api_token.token %>
 
     <!-- Comprehensive agent prompt -->
-    <div data-controller="clipboard">
+    <div
+      data-controller="clipboard"
+      data-clipboard-copied-value="<%= t("common.copied") %>"
+      data-clipboard-failed-value="<%= t("common.failed") %>"
+      data-clipboard-copy-value="<%= t("common.copy") %>"
+    >
       <div class="bg-bg-elevated rounded-md max-h-96 overflow-y-auto">
         <pre
           data-clipboard-target="source"
           class="px-3 py-3 text-xs font-mono text-content-secondary whitespace-pre-wrap break-words leading-relaxed"
 ># ClawDeck — Your Task Dashboard
 
-ClawDeck is where your human manages your work queue. Think of it as your shared kanban board.
+ClawDeck 是你的“任务控制台”，人类在这里管理你的工作队列。你可以把它理解成你们共享的看板。
 
-## How it works
+## 工作方式
 
-1. Your human creates tasks and organizes them on the board
-2. Your human explicitly assigns tasks to you when ready
-3. You poll for assigned tasks and work on them
-4. You update progress and mark things done
-5. Your human sees everything in real-time
+1. 人类创建任务并在看板上整理
+2. 人类在合适的时候显式将任务分配给你
+3. 你轮询获取已分配任务并开始执行
+4. 你更新进度并标记完成
+5. 人类可以实时看到你的状态与更新
 
-## Connection
+## 连接信息
 
 - **API URL:** <%= api_url %>
 - **Token:** <%= api_token %>
 - **Auth Header:** `Authorization: Bearer <%= api_token %>`
 
-## Identify yourself
+## 标识你的身份
 
-Include these headers with every request so your human knows who's connected:
+每次请求都必须携带以下 header，便于人类知道是哪一个 Agent 连接上来了：
 - `X-Agent-Name`: Your name (e.g., "<%= @user.agent_name.presence || "OpenClaw" %>")
 - `X-Agent-Emoji`: Your emoji (e.g., "<%= @user.agent_emoji.presence || "🦞" %>")
 
-## Your workflow
+## 你的工作流
 
-### Polling for assigned tasks (every 30s or on heartbeat):
-1. Call `GET /tasks?assigned=true` to get tasks assigned to you
-2. Pick the first task (oldest assignment)
-3. Move it to "in_progress" and start working
+### 轮询已分配任务（每 30 秒或心跳触发）：
+1. 调用 `GET /tasks?assigned=true` 获取分配给你的任务
+2. 选择第一个任务（最早分配的）
+3. 将其状态改为 `in_progress` 并开始执行
 
-### When working on a task:
-- **Need help:** Set `blocked: true` — your human will unblock you
-- **Finished:** Move to "in_review" (needs human review) or "done" (complete)
+### 执行任务时：
+- **需要协助**：将 `blocked: true`，并在 activity_note 中说明原因，人类会帮你解除阻塞
+- **完成**：将状态改为 `in_review`（需要人类审核）或 `done`（完全完成）
 
-### You can also:
-- Create new tasks (ideas, follow-ups, things you noticed)
-- Check task details and history
+### 你也可以：
+- 创建新任务（灵感、后续事项、你发现的问题）
+- 查看任务详情与历史记录
 
-## API Reference
+## API 参考
 
-**Get assigned tasks (your work queue):**
+**获取已分配任务（你的工作队列）：**
 `GET /tasks?assigned=true`
-Returns tasks assigned to you, ordered by assignment time (oldest first).
+返回分配给你的任务，按分配时间排序（最早优先）。
 
-**List all tasks:**
+**列出所有任务：**
 `GET /tasks` or `GET /tasks?status=in_progress`
 
-**Get task:**
+**获取单个任务：**
 `GET /tasks/:id`
 
-**Update task:**
+**更新任务：**
 `PATCH /tasks/:id`
 Body: `{ "status": "in_progress" }` or `{ "blocked": true }`
 
-**Complete task:**
+**切换完成状态：**
 `PATCH /tasks/:id/complete`
 
-**Create task:**
+**创建任务：**
 `POST /tasks`
 Body: `{ "name": "Task title", "status": "inbox" }`
 
-## Statuses
-- `inbox` — New, not prioritized
-- `up_next` — Prioritized, waiting to be assigned
-- `in_progress` — You're working on it
-- `in_review` — Done, needs human review
-- `done` — Complete
+## 状态（Statuses）
+- `inbox` — 新任务/想法，未优先排序
+- `up_next` — 已排优先级，等待分配
+- `in_progress` — 你正在执行
+- `in_review` — 你已完成，等待人类审核
+- `done` — 完成
 
-## Priorities
+## 优先级（Priorities）
 `none`, `low`, `medium`, `high`
 
-## Tips
-- Poll for assigned tasks frequently — your human assigns work explicitly
-- When stuck, mark blocked — your human will unblock you
-- Create tasks for things you notice but can't tackle now</pre>
+## 输出语言要求（重要）
+- 除非用户明确要求英文，否则你的回复与 activity_note 都使用中文
+- 任务描述/总结尽量简洁清晰，方便人类快速审核
+
+## 小提示
+- 频繁轮询已分配任务：人类会显式把任务分配给你
+- 卡住时立刻标记 blocked 并说明需要什么信息
+- 你发现但暂时做不了的事，先创建成任务，避免遗忘</pre>
       </div>
       <div class="flex items-center gap-3 mt-2">
         <button
@@ -164,28 +183,28 @@ Body: `{ "name": "Task title", "status": "inbox" }`
           data-action="click->clipboard#copy"
           class="cursor-pointer px-3 py-1.5 bg-bg-elevated hover:bg-bg-hover text-content-secondary text-xs font-medium rounded-md transition-colors"
         >
-          <span data-clipboard-target="label">Copy</span>
+          <span data-clipboard-target="label"><%= t("common.copy") %></span>
         </button>
-        <%= button_to "Regenerate token", regenerate_api_token_settings_path,
+        <%= button_to t("settings.agent.regenerate_token"), regenerate_api_token_settings_path,
             method: :post,
-            data: { turbo_confirm: "This will invalidate your current token. Continue?" },
+            data: { turbo_confirm: t("settings.agent.regenerate_confirm") },
             class: "cursor-pointer text-xs text-content-muted hover:text-content-secondary transition-colors" %>
       </div>
     </div>
 
     <!-- Connected Agent (within same box) -->
     <div class="pt-4 border-t border-border">
-      <p class="text-xs font-medium text-content-secondary mb-3">Connected Agent</p>
+      <p class="text-xs font-medium text-content-secondary mb-3"><%= t("settings.agent.connected_agent") %></p>
 
       <% if @user.agent_last_active_at.present? %>
         <div class="flex items-center gap-3">
           <span class="text-xl"><%= @user.agent_emoji || "🦞" %></span>
           <span class="text-sm text-content"><%= @user.agent_name || "Agent" %></span>
           <span class="text-xs text-content-muted">•</span>
-          <span class="text-xs text-content-muted">Last active: <%= time_ago_in_words(@user.agent_last_active_at) %> ago</span>
+          <span class="text-xs text-content-muted"><%= t("settings.agent.last_active", time: time_ago_in_words(@user.agent_last_active_at)) %></span>
         </div>
       <% else %>
-        <p class="text-xs text-content-muted">No agent connected yet</p>
+        <p class="text-xs text-content-muted"><%= t("settings.agent.no_agent") %></p>
       <% end %>
     </div>
   </div>

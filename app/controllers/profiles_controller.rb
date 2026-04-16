@@ -13,7 +13,7 @@ class ProfilesController < ApplicationController
     end
 
     if @user.update(profile_params)
-      redirect_to settings_path, notice: "Profile updated successfully."
+      redirect_to settings_path, notice: t("notices.profile_updated")
     else
       render :show, status: :unprocessable_entity
     end
@@ -22,7 +22,7 @@ class ProfilesController < ApplicationController
   def regenerate_api_token
     current_user.api_tokens.destroy_all
     @api_token = current_user.api_tokens.create!
-    redirect_to settings_path, notice: "API token regenerated."
+    redirect_to settings_path, notice: t("notices.api_token_regenerated")
   end
 
   private

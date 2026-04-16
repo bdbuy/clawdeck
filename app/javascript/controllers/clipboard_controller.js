@@ -2,6 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["source", "label"]
+  static values = { copied: String, failed: String, copy: String }
 
   async copy() {
     const text = this.sourceTarget.textContent || this.sourceTarget.value
@@ -11,7 +12,7 @@ export default class extends Controller {
       
       if (this.hasLabelTarget) {
         const originalText = this.labelTarget.textContent
-        this.labelTarget.textContent = "Copied!"
+        this.labelTarget.textContent = this.hasCopiedValue ? this.copiedValue : "Copied!"
         
         setTimeout(() => {
           this.labelTarget.textContent = originalText
@@ -21,10 +22,10 @@ export default class extends Controller {
       console.error("Failed to copy:", err)
       
       if (this.hasLabelTarget) {
-        this.labelTarget.textContent = "Failed"
+        this.labelTarget.textContent = this.hasFailedValue ? this.failedValue : "Failed"
         
         setTimeout(() => {
-          this.labelTarget.textContent = "Copy"
+          this.labelTarget.textContent = this.hasCopyValue ? this.copyValue : "Copy"
         }, 2000)
       }
     }

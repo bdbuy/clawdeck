@@ -35,6 +35,7 @@ Rails.application.routes.draw do
   resource :settings, only: [ :show, :update ], controller: "profiles" do
     post :regenerate_api_token
   end
+  resource :locale, only: [ :update ]
 
   # Boards (multi-board kanban views)
   resources :boards, only: [ :index, :show, :create, :update, :destroy ] do

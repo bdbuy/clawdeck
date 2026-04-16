@@ -15,7 +15,7 @@
   <div class="absolute inset-0 bg-black/60" onclick="document.getElementById('board-settings-modal').classList.add('hidden')"></div>
   <div class="relative bg-bg-surface border border-white/[0.08] rounded-xl shadow-2xl w-full max-w-sm mx-4 overflow-hidden" style="box-shadow: 0 12px 40px rgba(0,0,0,0.5);">
     <div class="px-5 py-4 border-b border-white/[0.06] flex items-center justify-between">
-      <span class="text-sm font-bold text-content">Board Settings</span>
+      <span class="text-sm font-bold text-content"><%= t("boards.settings.title") %></span>
       <button type="button"
               onclick="document.getElementById('board-settings-modal').classList.add('hidden')"
               class="p-2 rounded-lg text-content-muted hover:text-content hover:bg-white/[0.04] transition-colors cursor-pointer">
@@ -27,15 +27,15 @@
 
     <%= form_with model: @board, url: board_path(@board), method: :patch, class: "p-5 space-y-4" do |form| %>
       <div>
-        <label class="block text-sm font-medium text-content-secondary mb-2">Board Name</label>
+        <label class="block text-sm font-medium text-content-secondary mb-2"><%= t("boards.settings.name.label") %></label>
         <%= form.text_field :name,
             required: true,
-            placeholder: "e.g., Work, Personal, Side Project",
+            placeholder: t("boards.settings.name.placeholder"),
             class: "w-full px-3 py-2 text-sm bg-bg-card border border-white/[0.08] rounded-lg focus:outline-none focus:ring-2 focus:ring-accent text-content placeholder-content-muted" %>
       </div>
 
       <div>
-        <label class="block text-sm font-medium text-content-secondary mb-2">Icon</label>
+        <label class="block text-sm font-medium text-content-secondary mb-2"><%= t("boards.settings.icon.label") %></label>
         <div class="flex flex-wrap gap-2" id="edit-icon-group">
           <% edit_icons = Board::DEFAULT_ICONS.dup %>
           <% if current_user.agent_last_active_at.present? && current_user.agent_emoji.present? && !edit_icons.include?(current_user.agent_emoji) %>
@@ -60,9 +60,9 @@
         <% if @boards.count > 1 %>
           <%= link_to board_path(@board),
               method: :delete,
-              data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this board? All tasks will be permanently deleted." },
+              data: { turbo_method: :delete, turbo_confirm: t("boards.settings.delete.confirm") },
               class: "text-sm text-status-error hover:text-status-error/80 transition-colors cursor-pointer" do %>
-            Delete board
+            <%= t("boards.settings.delete.label") %>
           <% end %>
         <% else %>
           <span></span>
@@ -72,11 +72,22 @@
           <button type="button"
                   onclick="document.getElementById('board-settings-modal').classList.add('hidden')"
                   class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-content-secondary transition-colors cursor-pointer">
-            Cancel
+            <%= t("common.cancel") %>
           </button>
-          <%= form.submit "Save Changes", class: "px-3 py-1.5 text-xs font-semibold rounded-lg bg-accent text-content hover:bg-accent-hover transition-colors cursor-pointer" %>
+          <%= form.submit t("boards.settings.actions.save_changes"), class: "px-3 py-1.5 text-xs font-semibold rounded-lg bg-accent text-content hover:bg-accent-hover transition-colors cursor-pointer" %>
         </div>
       </div>
     <% end %>
+
+    <div class="px-5 pb-5 -mt-1">
+      <div class="h-px bg-white/[0.06] my-4"></div>
+      <label class="block text-sm font-medium text-content-secondary mb-2"><%= t("common.language") %></label>
+      <%= form_with url: locale_path, method: :patch do %>
+        <%= select_tag :locale,
+            options_for_select([[t("common.chinese"), "zh-CN"], [t("common.english"), "en"]], I18n.locale.to_s),
+            onchange: "this.form.submit()",
+            class: "w-full px-3 py-2 text-sm bg-bg-card border border-white/[0.08] rounded-lg focus:outline-none focus:ring-2 focus:ring-accent text-content" %>
+      <% end %>
+    </div>
   </div>
 </div>

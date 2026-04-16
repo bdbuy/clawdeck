@@ -28,4 +28,152 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  common:
+    home: "Home"
+    settings: "Settings"
+    save: "Save"
+    cancel: "Cancel"
+    close: "Close"
+    back: "Back"
+    delete: "Delete"
+    sign_in: "Sign in"
+    log_out: "Log out"
+    copy: "Copy"
+    copied: "Copied!"
+    failed: "Failed"
+    language: "Language"
+    chinese: "中文"
+    english: "English"
+  nav:
+    switch_board: "Switch board"
+    create_new_board: "Create new board"
+    board_settings: "Board settings"
+    star_on_github: "Star on GitHub"
+  boards:
+    settings:
+      title: "Board Settings"
+      name:
+        label: "Board Name"
+        placeholder: "e.g., Work, Personal, Side Project"
+      icon:
+        label: "Icon"
+      delete:
+        label: "Delete board"
+        confirm: "Are you sure you want to delete this board? All tasks will be permanently deleted."
+      actions:
+        save_changes: "Save Changes"
+  settings:
+    title: "Settings"
+    profile:
+      section_title: "Profile"
+      avatar: "Avatar"
+      avatar_hint: "Max 512KB, 256x256px. JPEG, PNG, or WebP."
+      remove_avatar: "Remove avatar"
+      email: "Email Address"
+      save_profile: "Save profile"
+    agent:
+      title: "OpenClaw Integration"
+      description: "Connect your OpenClaw agent to ClawDeck. Copy the prompt below and add it to your agent's configuration."
+      copy: "Copy"
+      regenerate_token: "Regenerate token"
+      regenerate_confirm: "This will invalidate your current token. Continue?"
+      connected_agent: "Connected Agent"
+      no_agent: "No agent connected yet"
+      last_active: "Last active: %{time} ago"
+  notices:
+    profile_updated: "Profile updated successfully."
+    api_token_regenerated: "API token regenerated."
+  auth:
+    sessions:
+      title: "Sign in"
+      heading: "Welcome back!"
+      subheading: "Sign in to continue to ClawDeck."
+      continue_with_github: "Continue with GitHub"
+      or: "or"
+      email: "Email"
+      password: "Password"
+      password_placeholder: "Enter password"
+      submit: "Sign in"
+      forgot_password: "Forgot password?"
+      sign_up: "Sign up"
+    registrations:
+      title: "Sign up"
+      heading: "Create an account"
+      subheading: "Sign up to start organizing your tasks with ClawDeck."
+      continue_with_github: "Continue with GitHub"
+      or: "or"
+      email: "Email"
+      password: "Password"
+      password_placeholder: "Enter password"
+      password_confirmation: "Confirm password"
+      password_confirmation_placeholder: "Confirm password"
+      submit: "Create account"
+      already_have_account: "Already have an account?"
+    passwords:
+      forgot_title: "Forgot password"
+      forgot_heading: "Forgot your password?"
+      forgot_subheading: "Enter your email and we'll send you reset instructions."
+      email: "Email"
+      send_instructions: "Email reset instructions"
+      back_to_sign_in: "Back to sign in"
+      reset_title: "Reset password"
+      reset_heading: "Update your password"
+      reset_subheading: "Enter your new password below."
+      new_password: "New password"
+      new_password_placeholder: "Enter new password"
+      confirm_password: "Confirm password"
+      confirm_password_placeholder: "Confirm new password"
+      update_password: "Update password"
+  command_bar:
+    placeholders:
+      search: "Search cards or run a command..."
+      agent: "Ask a question and press Enter..."
+    actions:
+      title: "Actions"
+      ask_about_tasks: "Ask about tasks"
+      query_your_boards: "Query your boards"
+      focus_today: "What should I focus on?"
+      top_priorities: "Top priorities"
+      weekly_recap: "Weekly recap"
+      summary_of_progress: "Summary of progress"
+    back: "Back"
+    cards: "Cards"
+    no_cards_found: "No cards found for “%{query}”"
+    status:
+      inbox: "Inbox"
+      up_next: "Up Next"
+      in_progress: "In Progress"
+      in_review: "In Review"
+      done: "Done"
+    errors:
+      generic: "Something went wrong. Please try again."
+    agent:
+      empty_title: "Query your tasks"
+      empty_hint: "Ask about what's overdue, in progress, blocked, or get a summary"
+      chips:
+        focus: "What should I focus on?"
+        recap: "Weekly recap"
+  delete_modal:
+    title_prefix: "Delete “"
+    title_suffix: "”?"
+    description: "This action cannot be undone."
+    confirm: "Delete"
+  tasks:
+    title_placeholder: "Task title"
+    notes_placeholder: "Add notes..."
+    details: "Details"
+    fields:
+      status: "Status"
+      priority: "Priority"
+      agent: "Agent"
+    agent:
+      assigned: "Assigned"
+      assign: "Assign"
+    agent_banner:
+      done_title: "Agent finished — needs review"
+      done_hint: "Review changes before moving to Done"
+      working_title: "Agent is working on this"
+      working_hint: "Check back soon for updates"
+    subtasks: "Subtasks"
+    suggestion: "Suggestion"
+    activity: "Activity"

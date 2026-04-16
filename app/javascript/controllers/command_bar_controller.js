@@ -3,7 +3,7 @@ import { Controller } from "@hotwired/stimulus"
 // Connects to data-controller="command-bar"
 export default class extends Controller {
   static targets = ["dialog", "backdrop", "input", "body", "searchResults", "actionsPanel", "agentPanel", "agentMessages", "modeIcon", "backButton", "escBadge"]
-  static values = { mode: { type: String, default: "search" }, open: { type: Boolean, default: false } }
+  static values = { mode: { type: String, default: "search" }, open: { type: Boolean, default: false }, i18n: String }
 
   connect() {
     this.boundKeydown = this.globalKeydown.bind(this)
@@ -12,6 +12,7 @@ export default class extends Controller {
     document.addEventListener("command-bar:toggle", this.boundToggle)
     this.messages = []
     this.typing = false
+    this.i18nData = this.hasI18nValue ? JSON.parse(this.i18nValue) : {}
   }
 
   disconnect() {
@@ -122,16 +123,19 @@ export default class extends Controller {
 
     const shown = results.slice(0, 6)
     if (shown.length === 0) {
-      this.searchResultsTarget.innerHTML = `<div class="py-5 text-center text-xs text-[#444]">No cards found for &ldquo;${this.escapeHtml(this.inputTarget.value.trim())}&rdquo;</div>`
+      const template = this.i18nData?.no_cards_found || ""
+      const queryText = this.escapeHtml(this.inputTarget.value.trim())
+      const text = template.replace("%{query}", queryText)
+      this.searchResultsTarget.innerHTML = `<div class="py-5 text-center text-xs text-[#444]">${text}</div>`
       return
     }
 
-    const statusLabels = { inbox: "Inbox", up_next: "Up Next", in_progress: "In Progress", in_review: "In Review", done: "Done" }
+    const statusLabels = this.i18nData?.status || { inbox: "Inbox", up_next: "Up Next", in_progress: "In Progress", in_review: "In Review", done: "Done" }
     const statusDots = { inbox: "#888", up_next: "#60a5fa", in_progress: "#fbbf24", in_review: "#a78bfa", done: "#34d399" }
 
     this.searchResultsTarget.innerHTML = `
       <div class="px-2 py-1">
-        <div class="px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.06em] text-[#444]">Cards</div>
+        <div class="px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.06em] text-[#444]">${this.escapeHtml(this.i18nData?.cards || "Cards")}</div>
         ${shown.map(r => {
           const label = statusLabels[r.status] || r.status
           const dot = statusDots[r.status] || "#444"
@@ -215,7 +219,7 @@ export default class extends Controller {
       })
       .catch(() => {
         this.typing = false
-        this.messages.push({ type: "agent", text: "Something went wrong. Please try again." })
+        this.messages.push({ type: "agent", text: this.i18nData?.errors?.generic || "Something went wrong. Please try again." })
         this.renderAgentPanel()
         this.scrollAgentToBottom()
       })
@@ -223,8 +227,8 @@ export default class extends Controller {
 
   detectMessageType(text) {
     const t = text.toLowerCase()
-    if (t.includes("focus") || t === "what should i focus on?" || t === "what should i focus on today?") return "focus"
-    if (t.includes("weekly recap") || t === "give me a weekly recap") return "weekly_recap"
+    if (t.includes("focus") || t.includes("专注") || t.includes("聚焦") || t === "what should i focus on?" || t === "what should i focus on today?") return "focus"
+    if (t.includes("weekly recap") || t.includes("周回顾") || t.includes("本周回顾") || t === "give me a weekly recap") return "weekly_recap"
     return "ask_agent"
   }
 
@@ -240,8 +244,8 @@ export default class extends Controller {
     // All others switch to agent mode
     const prompts = {
       agent: "",
-      today: "What should I focus on today?",
-      recap: "Give me a weekly recap",
+      today: this.i18nData?.agent?.chips?.focus || "What should I focus on today?",
+      recap: this.i18nData?.agent?.chips?.recap || "Give me a weekly recap",
     }
     this.modeValue = "agent"
     this.messages = []
@@ -265,13 +269,19 @@ export default class extends Controller {
 
     if (this.messages.length === 0 && !this.typing) {
       // Empty state
+      const title = this.escapeHtml(this.i18nData?.agent?.empty_title || "Query your tasks")
+      const hint = this.escapeHtml(this.i18nData?.agent?.empty_hint || "Ask about what's overdue, in progress, blocked, or get a summary")
+      const chips = [
+        this.i18nData?.agent?.chips?.focus || "What should I focus on?",
+        this.i18nData?.agent?.chips?.recap || "Weekly recap",
+      ]
       this.agentMessagesTarget.innerHTML = `
         <div class="py-5 text-center">
           <div class="text-[28px] mb-2.5">⌨️</div>
-          <div class="text-[13px] font-semibold text-[#666]">Query your tasks</div>
-          <div class="text-[11px] font-medium text-[#444] mt-1">Ask about what's overdue, in progress, blocked, or get a summary</div>
+          <div class="text-[13px] font-semibold text-[#666]">${title}</div>
+          <div class="text-[11px] font-medium text-[#444] mt-1">${hint}</div>
           <div class="flex gap-[5px] justify-center mt-4 flex-wrap">
-            ${["What should I focus on?", "Weekly recap"].map(q =>
+            ${chips.map(q =>
               `<button data-action="click->command-bar#chipSend" data-prompt="${this.escapeHtml(q)}"
                        class="text-[11px] font-medium py-[5px] px-[11px] rounded-[7px] cursor-pointer text-[#999]"
                        style="background:rgba(251,191,36,0.06);border:1px solid rgba(251,191,36,0.10)">${this.escapeHtml(q)}</button>`
@@ -329,9 +339,9 @@ export default class extends Controller {
 
   updateInputPlaceholder() {
     if (this.modeValue === "agent") {
-      this.inputTarget.placeholder = "Ask about your tasks..."
+      this.inputTarget.placeholder = this.i18nData?.placeholders?.agent || "Ask about your tasks..."
     } else {
-      this.inputTarget.placeholder = "Search cards or run a command..."
+      this.inputTarget.placeholder = this.i18nData?.placeholders?.search || "Search cards or run a command..."
     }
   }
 

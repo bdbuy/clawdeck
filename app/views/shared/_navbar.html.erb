@@ -21,13 +21,13 @@
               <circle cx="8" cy="8" r="2.5" stroke="#888" stroke-width="1.5"/>
               <path d="M8 1V3M8 13V15M1 8H3M13 8H15M3.05 3.05L4.46 4.46M11.54 11.54L12.95 12.95M12.95 3.05L11.54 4.46M4.46 11.54L3.05 12.95" stroke="#888" stroke-width="1.5" stroke-linecap="round"/>
             </svg>
-            <span class="text-sm font-extrabold text-[#e0e0e0] tracking-[-0.02em]">Settings</span>
+            <span class="text-sm font-extrabold text-[#e0e0e0] tracking-[-0.02em]"><%= t("common.settings") %></span>
           <% else %>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="opacity-50">
               <path d="M2 8.5L8 3L14 8.5" stroke="#888" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               <path d="M3.5 7.5V13.5H6.5V10.5H9.5V13.5H12.5V7.5" stroke="#888" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <span class="text-sm font-extrabold text-[#e0e0e0] tracking-[-0.02em]">Home</span>
+            <span class="text-sm font-extrabold text-[#e0e0e0] tracking-[-0.02em]"><%= t("common.home") %></span>
           <% end %>
           <svg width="12" height="12" viewBox="0 0 16 16" fill="none" class="opacity-30 ml-0.5 transition-transform" data-dropdown-target="chevron">
             <path d="M4 6L8 10L12 6" stroke="#888" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -49,7 +49,7 @@
                 <path d="M3.5 7.5V13.5H6.5V10.5H9.5V13.5H12.5V7.5" stroke="#888" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </span>
-            <span class="text-[13px] font-semibold flex-1 truncate <%= is_home ? 'text-[#e0e0e0]' : 'text-[#777]' %>">Home</span>
+            <span class="text-[13px] font-semibold flex-1 truncate <%= is_home ? 'text-[#e0e0e0]' : 'text-[#777]' %>"><%= t("common.home") %></span>
             <% if is_home %>
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
                 <path d="M3 8.5L6.5 12L13 4" stroke="#f0f0f0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -60,7 +60,7 @@
           <div class="h-px bg-white/[0.06] my-1"></div>
           <%# "Switch board" label %>
           <div class="px-2.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.06em] text-[#444]">
-            Switch board
+            <%= t("nav.switch_board") %>
           </div>
           <%# Board list %>
           <div class="max-h-[60vh] overflow-y-auto">
@@ -89,7 +89,7 @@
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="ml-1">
               <path d="M8 3V13M3 8H13" stroke="#555" stroke-width="1.5" stroke-linecap="round"/>
             </svg>
-            <span class="text-[13px] font-semibold text-[#555]">Create new board</span>
+            <span class="text-[13px] font-semibold text-[#555]"><%= t("nav.create_new_board") %></span>
           </button>
         </div>
       </div>
@@ -146,12 +146,12 @@
                 onclick="document.getElementById('board-settings-modal').classList.remove('hidden')"
                 class="cursor-pointer flex items-center gap-[5px]"
                 style="font-size:12px;font-weight:600;color:#888;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);padding:5px 12px;border-radius:8px"
-                title="Board settings">
+                title="<%= t("nav.board_settings") %>">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:14px;height:14px;opacity:0.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
             <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
           </svg>
-          Board settings
+          <%= t("nav.board_settings") %>
         </button>
       <% end %>
 
@@ -165,7 +165,7 @@
                 aria-haspopup="true">
           <div class="w-[30px] h-[30px] rounded-lg overflow-hidden bg-white/[0.06] border border-transparent hover:bg-white/10 flex items-center justify-center transition-all">
             <% if current_user.has_avatar? %>
-              <%= image_tag current_user.avatar_source, class: "w-full h-full object-cover", alt: "Your avatar" %>
+              <%= image_tag current_user.avatar_source, class: "w-full h-full object-cover", alt: t("settings.profile.avatar") %>
             <% else %>
               <span class="text-[13px] font-bold text-[#e0e0e0]"><%= current_user.email_address.first.upcase %></span>
             <% end %>
@@ -200,7 +200,7 @@
               <circle cx="8" cy="8" r="2.5" stroke="#888" stroke-width="1.5"/>
               <path d="M8 1V3M8 13V15M1 8H3M13 8H15M3.05 3.05L4.46 4.46M11.54 11.54L12.95 12.95M12.95 3.05L11.54 4.46M4.46 11.54L3.05 12.95" stroke="#888" stroke-width="1.5" stroke-linecap="round"/>
             </svg>
-            Settings
+            <%= t("common.settings") %>
           <% end %>
           <%= link_to "https://github.com/clawdeckio/clawdeck",
               target: "_blank",
@@ -209,7 +209,7 @@
             <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" class="opacity-35">
               <path fill-rule="evenodd" d="M8 1C4.133 1 1 4.13 1 8.003c0 3.094 2.006 5.722 4.787 6.65.35.064.478-.152.478-.338 0-.166-.006-.607-.01-1.192-1.947.424-2.358-.94-2.358-.94-.318-.81-.777-1.026-.777-1.026-.635-.434.048-.425.048-.425.702.049 1.072.722 1.072.722.625 1.07 1.639.762 2.038.582.064-.453.245-.762.446-.937-1.554-.177-3.189-.779-3.189-3.466 0-.766.273-1.39.72-1.881-.071-.177-.313-.89.069-1.855 0 0 .588-.19 1.925.719A6.7 6.7 0 018 4.79c.595.003 1.194.08 1.753.236 1.336-.907 1.923-.719 1.923-.719.382.965.14 1.678.07 1.855.448.49.72 1.115.72 1.88 0 2.693-1.638 3.286-3.197 3.46.252.217.476.644.476 1.299 0 .937-.009 1.694-.009 1.923 0 .188.127.408.483.338A7.003 7.003 0 0015 8.003C15 4.13 11.867 1 8 1z" clip-rule="evenodd"/>
             </svg>
-            Star on GitHub
+            <%= t("nav.star_on_github") %>
           <% end %>
           <%= link_to "https://discord.gg/bJQrNasMC6",
               target: "_blank",
@@ -229,12 +229,12 @@
             <svg width="15" height="15" viewBox="0 0 16 16" fill="none" class="opacity-40">
               <path d="M6 2H4C2.9 2 2 2.9 2 4V12C2 13.1 2.9 14 4 14H6M11 11L14 8L11 5M6 8H14" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            Log out
+            <%= t("common.log_out") %>
           <% end %>
         </div>
       </div>
     <% else %>
-      <%= link_to "Sign in", new_session_path, class: "px-3 py-1.5 text-xs font-medium text-content-secondary hover:text-content transition-colors" %>
+      <%= link_to t("common.sign_in"), new_session_path, class: "px-3 py-1.5 text-xs font-medium text-content-secondary hover:text-content transition-colors" %>
     <% end %>
   </div>
 </header>

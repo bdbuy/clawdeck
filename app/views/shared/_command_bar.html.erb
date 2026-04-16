@@ -1,4 +1,42 @@
-<div data-controller="command-bar" data-command-bar-open-value="false" data-command-bar-mode-value="search">
+<div
+  data-controller="command-bar"
+  data-command-bar-open-value="false"
+  data-command-bar-mode-value="search"
+  data-command-bar-i18n-value="<%= ERB::Util.html_escape({
+    placeholders: {
+      search: t("command_bar.placeholders.search"),
+      agent: t("command_bar.placeholders.agent")
+    },
+    actions: {
+      title: t("command_bar.actions.title"),
+      ask_about_tasks: t("command_bar.actions.ask_about_tasks"),
+      query_your_boards: t("command_bar.actions.query_your_boards"),
+      focus_today: t("command_bar.actions.focus_today"),
+      top_priorities: t("command_bar.actions.top_priorities"),
+      weekly_recap: t("command_bar.actions.weekly_recap"),
+      summary_of_progress: t("command_bar.actions.summary_of_progress")
+    },
+    back: t("command_bar.back"),
+    cards: t("command_bar.cards"),
+    no_cards_found: t("command_bar.no_cards_found", query: "%{query}"),
+    status: {
+      inbox: t("command_bar.status.inbox"),
+      up_next: t("command_bar.status.up_next"),
+      in_progress: t("command_bar.status.in_progress"),
+      in_review: t("command_bar.status.in_review"),
+      done: t("command_bar.status.done")
+    },
+    errors: { generic: t("command_bar.errors.generic") },
+    agent: {
+      empty_title: t("command_bar.agent.empty_title"),
+      empty_hint: t("command_bar.agent.empty_hint"),
+      chips: {
+        focus: t("command_bar.agent.chips.focus"),
+        recap: t("command_bar.agent.chips.recap")
+      }
+    }
+  }.to_json) %>"
+>
   <%# Backdrop %>
   <div data-command-bar-target="backdrop" data-action="click->command-bar#close"
        class="hidden fixed inset-0 bg-black/50 z-[300]"></div>
@@ -23,7 +61,7 @@
         <input type="text"
                data-command-bar-target="input"
                data-action="input->command-bar#onInput keydown->command-bar#onInputKeydown"
-               placeholder="Search cards or run a command..."
+               placeholder="<%= t("command_bar.placeholders.search") %>"
                class="flex-1 bg-transparent border-none text-sm font-medium text-[#e0e0e0] placeholder-[#555] focus:outline-none focus:ring-0"
                style="font-family:inherit" />
         <%# Back button (agent mode only) %>
@@ -31,7 +69,7 @@
                 data-command-bar-target="backButton"
                 data-action="click->command-bar#switchToSearch"
                 class="hidden cursor-pointer"
-                style="font-size:10px;font-weight:600;color:#555;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:5px">Back</button>
+                style="font-size:10px;font-weight:600;color:#555;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);padding:3px 8px;border-radius:5px"><%= t("command_bar.back") %></button>
         <%# Esc badge %>
         <span style="font-size:10px;font-weight:600;color:#333;background:rgba(255,255,255,0.03);padding:3px 7px;border-radius:5px">esc</span>
       </div>
@@ -44,12 +82,12 @@
 
         <%# Quick actions (shown by default in search mode) %>
         <div data-command-bar-target="actionsPanel" style="padding:4px 8px">
-          <div style="font-size:10px;font-weight:700;color:#444;text-transform:uppercase;letter-spacing:0.06em;padding:6px 10px">Actions</div>
+          <div style="font-size:10px;font-weight:700;color:#444;text-transform:uppercase;letter-spacing:0.06em;padding:6px 10px"><%= t("command_bar.actions.title") %></div>
 
           <% [
-            ["agent", "⌨️", "Ask about tasks", "Query your boards"],
-            ["today", "☀️", "What should I focus on?", "Top priorities"],
-            ["recap", "📊", "Weekly recap", "Summary of progress"],
+            ["agent", "⌨️", t("command_bar.actions.ask_about_tasks"), t("command_bar.actions.query_your_boards")],
+            ["today", "☀️", t("command_bar.actions.focus_today"), t("command_bar.actions.top_priorities")],
+            ["recap", "📊", t("command_bar.actions.weekly_recap"), t("command_bar.actions.summary_of_progress")],
           ].each do |action_id, icon, label, hint| %>
             <button type="button"
                     data-action="click->command-bar#executeAction"
