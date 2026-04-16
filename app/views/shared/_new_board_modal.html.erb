@@ -3,7 +3,7 @@
   <div class="absolute inset-0 bg-black/60" onclick="document.getElementById('new-board-modal').classList.add('hidden')"></div>
   <div class="relative bg-bg-surface border border-white/[0.08] rounded-xl shadow-2xl w-full max-w-sm mx-4 overflow-hidden" style="box-shadow: 0 12px 40px rgba(0,0,0,0.5);">
     <div class="px-5 py-4 border-b border-white/[0.06] flex items-center justify-between">
-      <span class="text-sm font-bold text-content">New Board</span>
+      <span class="text-sm font-bold text-content"><%= t("boards.new.title") %></span>
       <button type="button"
               onclick="document.getElementById('new-board-modal').classList.add('hidden')"
               class="p-2 rounded-lg text-content-muted hover:text-content hover:bg-white/[0.04] transition-colors cursor-pointer">
@@ -15,15 +15,15 @@
 
     <%= form_with model: Board.new, url: boards_path, class: "p-5 space-y-4" do |form| %>
       <div>
-        <label class="block text-sm font-medium text-content-secondary mb-2">Board Name</label>
+        <label class="block text-sm font-medium text-content-secondary mb-2"><%= t("boards.settings.name.label") %></label>
         <%= form.text_field :name,
             required: true,
-            placeholder: "e.g., Work, Personal, Side Project",
+            placeholder: t("boards.settings.name.placeholder"),
             class: "w-full px-3 py-2 text-sm bg-bg-card border border-white/[0.08] rounded-lg focus:outline-none focus:ring-2 focus:ring-accent text-content placeholder-content-muted" %>
       </div>
 
       <div>
-        <label class="block text-sm font-medium text-content-secondary mb-2">Icon</label>
+        <label class="block text-sm font-medium text-content-secondary mb-2"><%= t("boards.settings.icon.label") %></label>
         <div class="flex flex-wrap gap-2" id="icon-group">
           <% available_icons = Board::DEFAULT_ICONS.dup %>
           <% if current_user.agent_last_active_at.present? && current_user.agent_emoji.present? && !available_icons.include?(current_user.agent_emoji) %>
@@ -45,9 +45,9 @@
         <button type="button"
                 onclick="document.getElementById('new-board-modal').classList.add('hidden')"
                 class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-content-secondary transition-colors cursor-pointer">
-          Cancel
+          <%= t("common.cancel") %>
         </button>
-        <%= form.submit "Create Board", class: "px-3 py-1.5 text-xs font-semibold rounded-lg bg-accent text-content hover:bg-accent-hover transition-colors cursor-pointer" %>
+        <%= form.submit t("boards.new.submit"), class: "px-3 py-1.5 text-xs font-semibold rounded-lg bg-accent text-content hover:bg-accent-hover transition-colors cursor-pointer" %>
       </div>
     <% end %>
   </div>

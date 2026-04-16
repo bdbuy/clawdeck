@@ -28,6 +28,9 @@
 #       enabled: "ON"
 
 en:
+  date:
+    formats:
+      long: "%A, %B %-d"
   common:
     home: "Home"
     settings: "Settings"
@@ -38,6 +41,7 @@ en:
     delete: "Delete"
     sign_in: "Sign in"
     log_out: "Log out"
+    back_to_board: "Back to Board"
     copy: "Copy"
     copied: "Copied!"
     failed: "Failed"
@@ -169,6 +173,24 @@ en:
     agent:
       assigned: "Assigned"
       assign: "Assign"
+      unassign: "Unassign"
+      review: "Review"
+      working: "Working"
+      assign_to: "Assign to %{name}"
+      unassign_from: "Unassign from %{name}"
+    priority:
+      label: "Priority"
+      none: "None"
+      low: "Low"
+      medium: "Medium"
+      high: "High"
+    card:
+      add_placeholder: "Enter a title for this card..."
+      add: "Add card"
+      add_button: "Add a card"
+    new:
+      title: "New Task"
+      submit: "Create Task"
     agent_banner:
       done_title: "Agent finished — needs review"
       done_hint: "Review changes before moving to Done"
@@ -177,3 +199,26 @@ en:
     subtasks: "Subtasks"
     suggestion: "Suggestion"
     activity: "Activity"
+  home:
+    title: "Home Dashboard - clawdeck"
+    greetings:
+      morning: "Good morning"
+      afternoon: "Good afternoon"
+      evening: "Good evening"
+    done_today: "done today"
+    agent_working_on: "Agent working on %{count} tasks"
+    today: "Today"
+    no_tasks_today: "No tasks for today"
+    today_hint: "Tasks in \"Up Next\" and \"In Progress\" will appear here"
+    agent_activity: "Agent Activity"
+    no_recent_agent_activity: "No recent agent activity"
+    agent_activity_hint: "Assign tasks to your agent to see updates here"
+    time_ago: "%{time} ago"
+    this_week: "This week"
+    you: "You"
+    agent: "Agent"
+  boards:
+    new:
+      title: "New Board"
+      submit: "Create Board"
+    filtered_by: "Filtered by:"

@@ -1,10 +1,10 @@
 <%
   column_labels = {
-    "inbox" => "Inbox",
-    "up_next" => "Up Next",
-    "in_progress" => "In Progress",
-    "in_review" => "In Review",
-    "done" => "Done"
+    "inbox" => t("command_bar.status.inbox"),
+    "up_next" => t("command_bar.status.up_next"),
+    "in_progress" => t("command_bar.status.in_progress"),
+    "in_review" => t("command_bar.status.in_review"),
+    "done" => t("command_bar.status.done")
   }
   column_dot_colors = {
     "inbox" => "#666",
@@ -45,14 +45,14 @@
     <div class="bg-bg-elevated rounded-lg border border-border p-2">
       <textarea data-inline-add-target="input"
                 data-action="keydown->inline-add#handleKeydown"
-                placeholder="Enter a title for this card..."
+                placeholder="<%= t("tasks.card.add_placeholder") %>"
                 rows="3"
                 class="w-full bg-transparent text-sm text-content placeholder-content-muted resize-none focus:outline-none"></textarea>
       <div class="flex items-center gap-2 mt-2">
         <button type="button"
                 data-action="click->inline-add#submit"
                 class="px-3 py-1.5 text-xs font-semibold rounded bg-accent text-content hover:bg-accent-hover transition-colors cursor-pointer">
-          Add card
+          <%= t("tasks.card.add") %>
         </button>
         <button type="button"
                 data-action="click->inline-add#cancel"
@@ -74,7 +74,7 @@
             onmouseenter="this.style.color='#666'"
             onmouseleave="this.style.color='#333'">
       <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M14 8H2M8 2V14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-      Add a card
+      <%= t("tasks.card.add_button") %>
     </button>
   </div>
 </div>

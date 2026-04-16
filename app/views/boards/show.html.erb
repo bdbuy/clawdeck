@@ -14,7 +14,7 @@
   <%# Tag filter indicator %>
   <% if @current_tag.present? %>
     <div class="flex items-center gap-2 px-6 py-2 bg-bg-surface border-b border-border">
-      <span class="text-xs text-content-muted">Filtered by:</span>
+      <span class="text-xs text-content-muted"><%= t("boards.filtered_by") %></span>
       <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-bg-elevated text-content">
         <%= @current_tag %>
         <%= link_to board_path(@board), class: "ml-1 hover:text-status-error" do %>

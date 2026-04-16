@@ -1,4 +1,7 @@
 zh-CN:
+  date:
+    formats:
+      long: "%Y年%-m月%-d日"
   common:
     home: "主页"
     settings: "设置"
@@ -9,6 +12,7 @@ zh-CN:
     delete: "删除"
     sign_in: "登录"
     log_out: "退出登录"
+    back_to_board: "返回看板"
     copy: "复制"
     copied: "已复制"
     failed: "失败"
@@ -140,6 +144,24 @@ zh-CN:
     agent:
       assigned: "已分配"
       assign: "分配"
+      unassign: "取消分配"
+      review: "审核"
+      working: "处理中"
+      assign_to: "分配给 %{name}"
+      unassign_from: "取消分配给 %{name}"
+    priority:
+      label: "优先级"
+      none: "无"
+      low: "低"
+      medium: "中"
+      high: "高"
+    card:
+      add_placeholder: "输入卡片标题…"
+      add: "添加卡片"
+      add_button: "添加一张卡片"
+    new:
+      title: "新建任务"
+      submit: "创建任务"
     agent_banner:
       done_title: "Agent 已完成 — 需要审核"
       done_hint: "审核后再移到“已完成”"
@@ -148,3 +170,26 @@ zh-CN:
     subtasks: "子任务"
     suggestion: "建议"
     activity: "动态"
+  home:
+    title: "主页 - ClawDeck"
+    greetings:
+      morning: "早上好"
+      afternoon: "下午好"
+      evening: "晚上好"
+    done_today: "今日完成"
+    agent_working_on: "Agent 正在处理 %{count} 个任务"
+    today: "今天"
+    no_tasks_today: "今天没有任务"
+    today_hint: "“接下来”和“进行中”的任务会出现在这里"
+    agent_activity: "Agent 动态"
+    no_recent_agent_activity: "近期没有 Agent 动作"
+    agent_activity_hint: "把任务分配给 Agent 后，这里会显示更新"
+    time_ago: "%{time}前"
+    this_week: "本周"
+    you: "你"
+    agent: "Agent"
+  boards:
+    new:
+      title: "新建看板"
+      submit: "创建看板"
+    filtered_by: "筛选标签："

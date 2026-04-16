@@ -1,4 +1,4 @@
-<% content_for :title, "Home Dashboard - clawdeck" %>
+<% content_for :title, t("home.title") %>
 
 <div class="max-w-[540px] mx-auto px-5 pb-12">
 
@@ -6,7 +6,7 @@
   <div class="flex items-end justify-between pt-9 animate-fade-up">
     <div>
       <div class="text-[11px] font-semibold text-[#444] tracking-[0.06em] uppercase mb-2">
-        <%= Date.today.strftime("%A, %B %-d") %>
+        <%= I18n.l(Date.current, format: :long) %>
       </div>
       <h1 class="text-[28px] font-extrabold text-[#f0f0f0] tracking-[-0.03em] leading-[1.15]">
         <span id="time-greeting"><%= time_greeting %></span>
@@ -14,7 +14,7 @@
       <script>
         (function() {
           var h = new Date().getHours();
-          var g = h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening";
+          var g = h < 12 ? "<%= j t("home.greetings.morning") %>" : h < 17 ? "<%= j t("home.greetings.afternoon") %>" : "<%= j t("home.greetings.evening") %>";
           document.getElementById("time-greeting").textContent = g;
         })();
       </script>
@@ -24,7 +24,7 @@
         <div class="text-[22px] font-extrabold text-[#f0f0f0] tracking-[-0.02em]">
           <%= @completed_today_count %>/<%= @all_today_tasks.size %>
         </div>
-        <div class="text-[11px] font-medium text-[#444]">done today</div>
+        <div class="text-[11px] font-medium text-[#444]"><%= t("home.done_today") %></div>
       </div>
       <% progress = @all_today_tasks.size > 0 ? (@completed_today_count.to_f / @all_today_tasks.size) : 0 %>
       <div class="relative w-11 h-11">
@@ -43,7 +43,7 @@
     <div class="flex items-center gap-1.5 pt-4 pb-6 animate-fade-up" style="animation-delay: 0.04s">
       <div class="w-[5px] h-[5px] rounded-full bg-[#fbbf24] animate-pulse-dot"></div>
       <span class="text-[11px] font-semibold text-[#fbbf24]">
-        Agent working on <%= pluralize(@agent_tasks_count, "task") %>
+        <%= t("home.agent_working_on", count: @agent_tasks_count) %>
       </span>
     </div>
   <% else %>
@@ -53,14 +53,14 @@
   <%# ─── Today's Tasks ─── %>
   <div class="mb-8">
     <div class="flex items-center justify-between mb-2.5 animate-fade-up" style="animation-delay: 0.06s">
-      <h2 class="text-sm font-bold text-[#999]">Today</h2>
+      <h2 class="text-sm font-bold text-[#999]"><%= t("home.today") %></h2>
     </div>
 
     <div class="flex flex-col gap-[5px]">
       <% if @all_today_tasks.empty? %>
         <div class="px-4 py-8 rounded-xl text-center animate-fade-up" style="animation-delay: 0.08s; background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.04);">
-          <div class="text-[13px] font-medium text-[#555]">No tasks for today</div>
-          <div class="text-[11px] text-[#333] mt-1">Tasks in "Up Next" and "In Progress" will appear here</div>
+          <div class="text-[13px] font-medium text-[#555]"><%= t("home.no_tasks_today") %></div>
+          <div class="text-[11px] text-[#333] mt-1"><%= t("home.today_hint") %></div>
         </div>
       <% else %>
         <% @all_today_tasks.each_with_index do |task, i| %>
@@ -95,7 +95,7 @@
                 <% if task.due_date.present? %>
                   <span style="font-size: 10px; font-weight: 500; color: #555;
                                background: rgba(255,255,255,0.04); padding: 1px 6px; border-radius: 4px;">
-                    <%= task.due_date == Date.today ? "Today" : task.due_date.strftime("%-m/%-d") %>
+                    <%= task.due_date == Date.today ? t("home.today") : task.due_date.strftime("%-m/%-d") %>
                   </span>
                 <% end %>
               </div>
@@ -109,7 +109,7 @@
                           border: 1px solid <%= is_done ? 'rgba(52,211,153,0.12)' : 'rgba(251,191,36,0.12)' %>;">
                 <span style="font-size: 10px;">🤖</span>
                 <span style="font-size: 10px; font-weight: 600; color: <%= is_done ? '#34d399' : '#fbbf24' %>;">
-                  <%= is_done ? "Review" : "Working" %>
+                  <%= is_done ? t("tasks.agent.review") : t("tasks.agent.working") %>
                 </span>
                 <% unless is_done %>
                   <div style="width: 4px; height: 4px; border-radius: 50%; background: #fbbf24; animation: pulse 1.5s ease infinite;"></div>
@@ -126,7 +126,7 @@
   <div class="mb-8">
     <div class="flex items-center gap-[7px] mb-2.5 animate-fade-up" style="animation-delay: 0.28s">
       <span class="text-[13px]">🤖</span>
-      <h2 class="text-sm font-bold text-[#999]">Agent Activity</h2>
+      <h2 class="text-sm font-bold text-[#999]"><%= t("home.agent_activity") %></h2>
     </div>
     <div class="flex flex-col gap-[5px]">
       <% if @agent_updates.empty? %>
@@ -134,8 +134,8 @@
              style="padding: 11px 13px; border-radius: 10px;
                     background: rgba(251,191,36,0.03); border: 1px solid rgba(251,191,36,0.07);
                     animation-delay: 0.32s;">
-          <div class="text-xs font-medium leading-[1.45]" style="color: #555;">No recent agent activity</div>
-          <div class="text-[10px] font-medium mt-1" style="color: #333;">Assign tasks to your agent to see updates here</div>
+          <div class="text-xs font-medium leading-[1.45]" style="color: #555;"><%= t("home.no_recent_agent_activity") %></div>
+          <div class="text-[10px] font-medium mt-1" style="color: #333;"><%= t("home.agent_activity_hint") %></div>
         </div>
       <% else %>
         <% @agent_updates.each_with_index do |activity, i| %>
@@ -147,7 +147,7 @@
               <%= activity.task.name %> &mdash; <%= activity.description %>
             </div>
             <div class="text-[10px] font-medium mt-1" style="color: #333;">
-              <%= time_ago_in_words(activity.created_at) %> ago
+              <%= t("home.time_ago", time: time_ago_in_words(activity.created_at)) %>
             </div>
           </div>
         <% end %>
@@ -167,15 +167,15 @@
               animation-delay: 0.48s;">
     <%# Chart header %>
     <div class="flex items-center justify-between mb-5">
-      <div style="font-size: 11px; font-weight: 700; color: #444; text-transform: uppercase; letter-spacing: 0.06em;">This week</div>
+      <div style="font-size: 11px; font-weight: 700; color: #444; text-transform: uppercase; letter-spacing: 0.06em;"><%= t("home.this_week") %></div>
       <div class="flex gap-3.5">
         <div class="flex items-center gap-[5px]">
           <div style="width: 8px; height: 8px; border-radius: 2px; background: #ef4444;"></div>
-          <span style="font-size: 10px; font-weight: 500; color: #555;">You (<%= total_you %>)</span>
+          <span style="font-size: 10px; font-weight: 500; color: #555;"><%= t("home.you") %> (<%= total_you %>)</span>
         </div>
         <div class="flex items-center gap-[5px]">
           <div style="width: 8px; height: 8px; border-radius: 2px; background: #fbbf24;"></div>
-          <span style="font-size: 10px; font-weight: 500; color: #555;">Agent (<%= total_agent %>)</span>
+          <span style="font-size: 10px; font-weight: 500; color: #555;"><%= t("home.agent") %> (<%= total_agent %>)</span>
         </div>
       </div>
     </div>
